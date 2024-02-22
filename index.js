@@ -148,9 +148,11 @@ bot.on("message", async (msg) => {
         }),
       }
     );
-  } else {
+  } else if (!msg.web_app_data?.data) {
+    let codeFind = false;
     products.forEach((p) => {
       if (p?.sku.split("-").find((code) => code == msg.text)) {
+        codeFind = true;
         let text = `${p.name}\n\n${p.description
           .replaceAll("<p>", "")
           .replaceAll("</p>", "")
@@ -184,12 +186,15 @@ bot.on("message", async (msg) => {
         });
       }
     });
-    bot.sendMessage(msg.chat.id, `Код не найден`, {
-      reply_markup: JSON.stringify({
-        keyboard: [[{ text: "Назад" }]],
-        resize_keyboard: true,
-      }),
-    });
+
+    if (!codeFind) {
+      bot.sendMessage(msg.chat.id, `Код не найден`, {
+        reply_markup: JSON.stringify({
+          keyboard: [[{ text: "Назад" }]],
+          resize_keyboard: true,
+        }),
+      });
+    }
   }
 });
 
