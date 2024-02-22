@@ -184,6 +184,12 @@ bot.on("message", async (msg) => {
         });
       }
     });
+    bot.sendMessage(msg.chat.id, `Код не найден`, {
+      reply_markup: JSON.stringify({
+        keyboard: [[{ text: "Назад" }]],
+        resize_keyboard: true,
+      }),
+    });
   }
 });
 
