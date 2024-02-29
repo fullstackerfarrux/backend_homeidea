@@ -148,7 +148,7 @@ bot.on("message", async (msg) => {
         }),
       }
     );
-  } else if (!msg.web_app_data?.data) {
+  } else if (!msg.web_app_data?.data && !isNaN(+msg.text)) {
     let codeFind = false;
     products.forEach((p) => {
       if (p?.sku.split("-").find((code) => code == msg.text)) {
